@@ -11,8 +11,22 @@ struct BookListView: View {
     var model = BookModel()
     
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            ScrollView {
+                LazyVStack {
+                    ForEach(0..<3){ i in
+                        NavigationLink(destination: {
+                            BookRatingView()
+                        }) {
+                            BookView()
+                                .padding(30)
+                        }
+                        
+                    }.padding(20)
+                }
+            }.navigationTitle("My Library")
+        }
+
     }
 }
 
