@@ -14,21 +14,24 @@ struct BookListView: View {
         NavigationView {
             ScrollView {
                 LazyVStack {
-                    ForEach(0..<3){ i in
+                    ForEach(model.books){ book in
                         NavigationLink(destination: {
                             BookRatingView()
                         }) {
-                            BookView()
+                            BookView(book: book)
                                 .padding(30)
                         }
                         
                     }.padding(20)
                 }
-            }.navigationTitle("My Library")
+            }
+            .navigationTitle("My Library")
         }
+        .environmentObject(model)
 
     }
 }
+    
 
 struct BookListView_Previews: PreviewProvider {
     static var previews: some View {

@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct BookView: View {
+    var book:Book
+    
     var body: some View {
+        
         ZStack {
             Rectangle()
                 .foregroundColor(.white)
@@ -16,17 +19,19 @@ struct BookView: View {
                 .shadow(color: .gray, radius: 5, x: -5, y: 5)
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Text("Amazing Words")
+                    Text(book.title)
                         .font(.title)
                         .bold()
+                        .multilineTextAlignment(.leading)
                     Spacer()
-                    Image(systemName: "star")
+                    Image(systemName: book.isFavourite ? "star.fill" : "star")
                         .resizable()
                         .frame(width: 25, height: 25)
+                        .foregroundColor(.yellow)
                 }
-                Text("Sir Prise Party")
+                Text(book.author)
                     .italic()
-                Image("cover1")
+                Image("cover\(book.id)")
                     .resizable()
                     .scaledToFill()
                 
@@ -43,6 +48,7 @@ struct BookView: View {
 
 struct BookView_Previews: PreviewProvider {
     static var previews: some View {
-        BookView()
+        let model = BookModel()
+        BookView(book: model.books[0])
     }
 }

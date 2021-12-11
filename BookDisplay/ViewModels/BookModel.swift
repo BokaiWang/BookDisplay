@@ -7,7 +7,7 @@
 
 import Foundation
 
-class BookModel {
+class BookModel: ObservableObject {
     var books:[Book]
     
     init() {
