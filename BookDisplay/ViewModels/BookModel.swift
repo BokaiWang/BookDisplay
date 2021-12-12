@@ -8,7 +8,7 @@
 import Foundation
 
 class BookModel: ObservableObject {
-    var books:[Book]
+    @Published var books:[Book]
     
     init() {
         self.books = DataService.getLocalBooksData()

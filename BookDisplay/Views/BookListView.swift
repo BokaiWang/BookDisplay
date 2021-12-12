@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BookListView: View {
-    var model = BookModel()
+    @EnvironmentObject var model:BookModel
     
     var body: some View {
         NavigationView {
@@ -16,7 +16,7 @@ struct BookListView: View {
                 LazyVStack {
                     ForEach(model.books){ book in
                         NavigationLink(destination: {
-                            BookRatingView()
+                            BookRatingView(book: book)
                         }) {
                             BookView(book: book)
                                 .padding(30)
@@ -27,7 +27,7 @@ struct BookListView: View {
             }
             .navigationTitle("My Library")
         }
-        .environmentObject(model)
+        
 
     }
 }

@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct BookRatingView: View {
-    @State var selectionIndex = 1
+    @EnvironmentObject var model: BookModel
+    var book:Book
+    @State private var selectedRating = 2
+    
     var body: some View {
         VStack(spacing:20) {
             HStack {
-                Text("Amazing Words")
+                Text(book.title)
                     .bold()
                 .font(.largeTitle)
                 Spacer()
@@ -21,16 +24,23 @@ struct BookRatingView: View {
             .padding(.bottom, 30)
             Text("Read Now!")
                 .font(.title)
-            Image("cover1")
+            Image("cover\(book.id)")
                 .resizable()
                 .frame(width: 230, height: 350)
             Text("Mark for later")
                 .font(.title2)
-            Image(systemName: "star")
-                .frame(width: 25, height: 25)
-                .foregroundColor(.yellow)
+            
+            Button {
+                model.books[book.id-1].isFavourite.toggle()
+            } label: {
+                Image(systemName: book.isFavourite ? "star.fill" : "star")
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(.yellow)
+            }
+            
             Text("Rate Amazing Words")
-            Picker("", selection: $selectionIndex, content: {
+            
+            Picker("", selection: $selectedRating, content: {
                 Text("1").tag(1)
                 Text("2").tag(2)
                 Text("3").tag(3)
@@ -39,13 +49,19 @@ struct BookRatingView: View {
             })
                 .pickerStyle(SegmentedPickerStyle())
                 .frame(width: 300)
+                .onChange(of: selectedRating) { value in
+                    model.books[book.id-1].rating = value
+                }
+                .onAppear {
+                    selectedRating = book.rating
+                }
         }
        
     }
 }
 
-struct BookRatingView_Previews: PreviewProvider {
-    static var previews: some View {
-        BookRatingView()
-    }
-}
+//struct BookRatingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        BookRatingView()
+//    }
+//}
