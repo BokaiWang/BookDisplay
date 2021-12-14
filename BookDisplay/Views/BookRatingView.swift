@@ -24,9 +24,19 @@ struct BookRatingView: View {
             .padding(.bottom, 30)
             Text("Read Now!")
                 .font(.title)
-            Image("cover\(book.id)")
-                .resizable()
-                .frame(width: 230, height: 350)
+            
+            NavigationLink {
+                BookContentView(book: book).onAppear {
+                    model.updateSelectedBookIndex(bookId: book.id)
+                }
+            } label: {
+                Image("cover\(book.id)")
+                    .resizable()
+                    .frame(width: 230, height: 350)
+            }
+
+
+
             Text("Mark for later")
                 .font(.title2)
             
@@ -34,6 +44,7 @@ struct BookRatingView: View {
                 model.books[book.id-1].isFavourite.toggle()
             } label: {
                 Image(systemName: book.isFavourite ? "star.fill" : "star")
+                    .resizable()
                     .frame(width: 25, height: 25)
                     .foregroundColor(.yellow)
             }
