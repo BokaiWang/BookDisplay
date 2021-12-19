@@ -11,6 +11,7 @@ struct BookContentView: View {
     @EnvironmentObject var model:BookModel
     var book:Book
     @State var page = 0
+    
     var body: some View {
         
         TabView(selection: $page, content: {
@@ -24,6 +25,13 @@ struct BookContentView: View {
             }
         })
         .tabViewStyle(PageTabViewStyle())
+        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
+        .onChange(of: page) { newValue in
+            model.updateCurrentPage(bookId: book.id, page: page)
+        }
+        .onAppear {
+            page = book.currentPage
+        }
     }
 }
 

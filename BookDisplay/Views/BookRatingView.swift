@@ -26,9 +26,7 @@ struct BookRatingView: View {
                 .font(.title)
             
             NavigationLink {
-                BookContentView(book: book).onAppear {
-                    model.updateSelectedBookIndex(bookId: book.id)
-                }
+                BookContentView(book: book)
             } label: {
                 Image("cover\(book.id)")
                     .resizable()
@@ -41,7 +39,7 @@ struct BookRatingView: View {
                 .font(.title2)
             
             Button {
-                model.books[book.id-1].isFavourite.toggle()
+                model.updateFavourite(bookId: book.id)
             } label: {
                 Image(systemName: book.isFavourite ? "star.fill" : "star")
                     .resizable()
@@ -61,13 +59,12 @@ struct BookRatingView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .frame(width: 300)
                 .onChange(of: selectedRating) { value in
-                    model.books[book.id-1].rating = value
-                }
-                .onAppear {
-                    selectedRating = book.rating
+                    model.updateRating(bookId: book.id, rating: selectedRating)
                 }
         }
-       
+        .onAppear {
+            selectedRating = book.rating
+        }
     }
 }
 

@@ -26,7 +26,9 @@ struct BookListView: View {
                 }
             }
             .navigationTitle("My Library")
+            
         }
+        .navigationViewStyle(.stack)
         
 
     }

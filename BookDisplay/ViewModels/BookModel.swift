@@ -15,9 +15,27 @@ class BookModel: ObservableObject {
         self.books = DataService.getLocalBooksData()
     }
     
-    func updateSelectedBookIndex(bookId:Int) {
-        selectedBookIndex = books.firstIndex { book in
+    func updateCurrentPage(bookId:Int, page:Int) {
+        if let index = books.firstIndex(where: { book in
             book.id == bookId
-        }!
+        }) {
+            books[index].currentPage = page
+        }
+    }
+    
+    func updateFavourite(bookId:Int) {
+        if let index = books.firstIndex(where: { book in
+            book.id == bookId
+        }) {
+            books[index].isFavourite.toggle()
+        }
+    }
+    
+    func updateRating(bookId:Int, rating:Int) {
+        if let index = books.firstIndex(where: { book in
+            book.id == bookId
+        }) {
+            books[index].rating = rating
+        }
     }
 }
